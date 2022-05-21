@@ -1,5 +1,4 @@
 import time
-
 MENU = {
     "espresso": {
         "ingredients": {
@@ -25,7 +24,6 @@ MENU = {
         "cost": 3.0,
     }
 }
-
 global profit
 profit = 0.0
 resources = {
@@ -60,20 +58,16 @@ def payment(order):
     print(f"The total of the order will be {format(cost, '.2f')}")
     while total < cost:
         print("Insert coins")
-        q = int(input("No. of quarters:"))
-        total += q * .25
+        total += int(input("No. of quarters:"))*.25
         if total >= cost:
             break
-        d = int(input("No. of dimes:"))
-        total += d * .1
+        total += int(input("No. of dimes:"))*.1
         if total >= cost:
             break
-        n = int(input("No. of nickles:"))
-        total += n * .05
+        total += int(input("No. of nickles:"))*.05
         if total >= cost:
             break
-        p = int(input("No. of pennies:"))
-        total += p * .01
+        total += int(input("No. of pennies:"))*.01
         if total < cost:
             print(f"You are short ${format(round(cost - total, 2), '.2f')}")
             cont = input("Would you like to insert more coins?(yes/no)")

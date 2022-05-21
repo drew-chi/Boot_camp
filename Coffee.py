@@ -24,7 +24,7 @@ MENU = {
         "cost": 3.0,
     }
 }
-global profit
+
 profit = 0.0
 resources = {
     "water": 300,

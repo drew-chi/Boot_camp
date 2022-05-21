@@ -47,7 +47,8 @@ def report():
 def stockcheck(order):
     for item in MENU[order]["ingredients"]:
         if MENU[order]["ingredients"][item] > resources[item]:
-            print(f"Not enough {item} to make this order, please make another selection or refill {item} in the machine!")
+            print(
+                f"Not enough {item} to make this order, please make another selection or refill {item} in the machine!")
             return 0
     return 1
 
@@ -56,30 +57,30 @@ def payment(order):
     global profit
     cost = MENU[order]["cost"]
     total = 0.0
-    print(f"The total of the order will be {format(cost,'.2f')}")
+    print(f"The total of the order will be {format(cost, '.2f')}")
     while total < cost:
         print("Insert coins")
         q = int(input("No. of quarters:"))
-        total += q*.25
+        total += q * .25
         if total >= cost:
             break
         d = int(input("No. of dimes:"))
-        total += d*.1
+        total += d * .1
         if total >= cost:
             break
         n = int(input("No. of nickles:"))
-        total += n*.05
+        total += n * .05
         if total >= cost:
             break
         p = int(input("No. of pennies:"))
-        total += p*.01
+        total += p * .01
         if total < cost:
-            print(f"You are short ${format(round(cost - total,2),'.2f')}")
+            print(f"You are short ${format(round(cost - total, 2), '.2f')}")
             cont = input("Would you like to insert more coins?(yes/no)")
             if cont == "yes":
                 pass
             if cont == "no":
-                print(f"Returning ${format(round(total,2),'.2f')}")
+                print(f"Returning ${format(round(total, 2), '.2f')}")
                 return 0
     profit += cost
     change = float(format(total - cost, '.2f'))
@@ -95,6 +96,14 @@ def resourceadj(order):
         resources[item] = update
     time.sleep(3)
     print("Order is ready!")
+
+
+def refill(w, m, c):
+    resources["water"] += int(w)
+    resources["milk"] += int(m)
+    resources["coffee"] += int(c)
+    print("Refill complete! Current status is:")
+    report()
 
 
 def startup():
@@ -114,7 +123,12 @@ def startup():
                     break
             resourceadj(choice)
         elif choice == "fill":
-            pass
+            water = input("How many ml of water would you like to add?")
+            milk = input("How many ml of milk would you like to add?")
+            coffee = input("How many grams of coffee would you like to add?")
+            if water == "cancel" or milk == "cancel" or coffee == "cancel":
+                print("Refill cancelled!")
+            refill(water, milk, coffee)
         else:
             print("Invalid entry!")
 
